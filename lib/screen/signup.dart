@@ -1,11 +1,9 @@
 import 'dart:ui';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:e_commerce/provider/provider1.dart';
+import 'package:e_commerce/screen/home.dart';
 import 'package:e_commerce/screen/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
@@ -56,7 +54,9 @@ class _SignupState extends State<Signup> {
           //     .collection('users')
           //     .add({"username": name, "email": email});
           //////////////////////////////
-          //Navigator.of(context).pushReplacementNamed("HomePage");
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => Home(),
+          ));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             Navigator.of(context).pop(); //to close AlertDialog
@@ -166,6 +166,7 @@ class _SignupState extends State<Signup> {
                         },
                         /////////////
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        /////
                         cursorColor: Colors.amber,
                         decoration: InputDecoration(
                             filled: true,
