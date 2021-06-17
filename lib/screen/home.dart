@@ -12,26 +12,21 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
+  Future startapp() async {
     auth.authStateChanges().listen((user) {
       if (user == null) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => Login(),
         ));
       } else {
-        /////////////////
-        var snackbar = SnackBar(
-          content: Text("Hello: ${user.email}"),
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.blue,
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-        ///////////////////////////
+        print("okkk");
       }
     });
+  }
+
+  @override
+  void initState() {
+    startapp();
     super.initState();
   }
 
