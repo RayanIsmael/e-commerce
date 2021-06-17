@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:e_commerce/screen/signup.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -63,7 +64,7 @@ class Login extends StatelessWidget {
             ),
             //////
             SizedBox(
-              height: height*0.02,
+              height: height * 0.02,
             ),
 
             ///filed password///
@@ -90,7 +91,7 @@ class Login extends StatelessWidget {
             ),
             //////
             SizedBox(
-              height: height*0.05,
+              height: height * 0.05,
             ),
             /////login Button/////
             Padding(
@@ -115,7 +116,7 @@ class Login extends StatelessWidget {
             ),
             ///////
             SizedBox(
-              height:  height*0.05,
+              height: height * 0.05,
             ),
             ////text////
             Row(
@@ -126,9 +127,13 @@ class Login extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Signup(),
+                    ));
+                  },
                   child: Text(
-                    "LogUp",
+                    "Logn Up",
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
