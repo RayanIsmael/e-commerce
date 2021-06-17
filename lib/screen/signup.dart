@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:e_commerce/provider/provider1.dart';
 import 'package:e_commerce/screen/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
@@ -12,23 +16,102 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
     var name, email, password;
     double height = MediaQuery.of(context).size.height;
     ////// Validator
-    void signupcheckqq() {
-      var alldata = formkey.currentState;
-      if (alldata!.validate()) {
-        alldata.save();
-        print(name);
-        print(email);
-        print(password);
+    /////////////////////////////////
+    //////////Alert Dialog////
+    showDialog() {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.NO_HEADER, //more
+        animType: AnimType.SCALE, //more
+        body: Container(
+            height: 100,
+            child: Center(
+              child: CircularProgressIndicator(),
+            )),
+        ////more....
+      )..show();
+    }
+
+    ///////////////////
+    ////////////////////////////////
+    logup() async {
+      var formdata = formkey.currentState;
+      if (formdata!.validate()) {
+        formdata.save();
+        /////////////////////////////
+        try {
+          showDialog();
+          // ignore: unused_local_variable
+          UserCredential userCredential = await auth
+              .createUserWithEmailAndPassword(email: email, password: password);
+          ////////// Save name and email in firestore
+          // await FirebaseFirestore.instance
+          //     .collection('users')
+          //     .add({"username": name, "email": email});
+          //////////////////////////////
+          //Navigator.of(context).pushReplacementNamed("HomePage");
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            Navigator.of(context).pop(); //to close AlertDialog
+            ////////////////////////////
+            var snackbar = SnackBar(
+              content: Text("The password provided is too weak."),
+              duration: Duration(seconds: 1),
+            );
+            // ignore: deprecated_member_use
+            scaffoldkey.currentState!.showSnackBar(snackbar);
+            ///////////////////////////
+          } else if (e.code == 'email-already-in-use') {
+            Navigator.of(context).pop(); //to close AlertDialog
+            ////////////////////////////
+            var snackbar = SnackBar(
+              content: Text("The account already exists for that email."),
+              duration: Duration(seconds: 1),
+            );
+            // ignore: deprecated_member_use
+            scaffoldkey.currentState!.showSnackBar(snackbar);
+            ///////////////////////////
+          } else if (e.code == 'invalid-email') {
+            Navigator.of(context).pop(); //to close AlertDialog
+            ////////////////////////////
+            var snackbar = SnackBar(
+              content: Text("invalid-email."),
+              duration: Duration(seconds: 1),
+            );
+            // ignore: deprecated_member_use
+            scaffoldkey.currentState!.showSnackBar(snackbar);
+            ///////////////////////////
+          }
+        } catch (e) {
+          Navigator.of(context).pop(); //to close AlertDialog
+          print(e);
+        }
+        ////////////////////////////
+      } else {
+        ////////////////////////////
+        var snackbar = SnackBar(
+          content: Text("invalid-Input"),
+          duration: Duration(seconds: 1),
+        );
+        // ignore: deprecated_member_use
+        scaffoldkey.currentState!.showSnackBar(snackbar);
+        ///////////////////////////
       }
     }
 
-    ////////
+    /////////////////////////////
+    //////////////////////////////
+
+    ////////////////////////////
     return Scaffold(
+        key: scaffoldkey,
         backgroundColor: Colors.amber,
         body: ListView(
           children: [
@@ -82,8 +165,7 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                         /////////////
-                        autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         cursorColor: Colors.amber,
                         decoration: InputDecoration(
                             filled: true,
@@ -125,8 +207,7 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                         /////////////
-                        autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         cursorColor: Colors.amber,
                         decoration: InputDecoration(
                           filled: true,
@@ -170,8 +251,7 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                         /////////////
-                        autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         cursorColor: Colors.amber,
                         decoration: InputDecoration(
                             filled: true,
@@ -206,7 +286,7 @@ class _SignupState extends State<Signup> {
               padding: const EdgeInsets.symmetric(horizontal: 120),
               child: InkWell(
                   onTap: () {
-                    signupcheckqq();
+                    logup();
                   },
                   child: Container(
                     alignment: Alignment.center,
