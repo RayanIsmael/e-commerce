@@ -1,3 +1,4 @@
+import 'package:e_commerce/provider/firestor_products.dart';
 import 'package:e_commerce/provider/provider1.dart';
 import 'package:e_commerce/screen/home.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ModalProgress()),
+      ChangeNotifierProvider(create: (context) => Products()),
     ],
     child: MyApp(),
   ));
