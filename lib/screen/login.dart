@@ -1,7 +1,6 @@
 import 'dart:ui';
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_commerce/provider/provider1.dart';
+import 'package:e_commerce/screen/admin.dart';
 import 'package:e_commerce/screen/home.dart';
 import 'package:e_commerce/screen/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +25,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     ///////////////////////
- ///////////////////
+    ///////////////////
 /////////////////////////login
     mylogin() async {
       var progress = Provider.of<ModalProgress>(context, listen: false);
@@ -36,12 +35,19 @@ class _LoginState extends State<Login> {
         ///////////////////////////
         try {
           progress.change(true);
-          // ignore: unused_local_variable
-          UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          await auth.signInWithEmailAndPassword(
               email: email, password: password);
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => Home(),
-          ));
+
+          progress.change(false);
+          if (email == "rayan1998@gmail.com" && password == "NuttertoolS") {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => Admin(),
+            ));
+          } else {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => Home(),
+            ));
+          }
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             progress.change(false);
@@ -93,8 +99,8 @@ class _LoginState extends State<Login> {
         key: scaffoldkey,
         backgroundColor: Colors.amber,
         body: ModalProgressHUD(
-            inAsyncCall: Provider.of<ModalProgress>(context).modalhub,
-                  child: ListView(
+          inAsyncCall: Provider.of<ModalProgress>(context).modalhub,
+          child: ListView(
             children: [
               /////image/////
               Padding(

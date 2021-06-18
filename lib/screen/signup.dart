@@ -21,6 +21,7 @@ class Signup extends StatelessWidget {
     ///////////////////
     ////////////////////////////////
     logup() async {
+      print("signup");
       var progress = Provider.of<ModalProgress>(context, listen: false);
       var formdata = formkey.currentState;
       if (formdata!.validate()) {

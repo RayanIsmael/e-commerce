@@ -1,3 +1,4 @@
+import 'package:e_commerce/screen/admin.dart';
 import 'package:e_commerce/screen/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,11 @@ class _HomeState extends State<Home> {
           builder: (context) => Login(),
         ));
       } else {
-        print("okkk");
+        if (auth.currentUser!.email == "rayan1998@gmail.com") {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => Admin(),
+            ));
+          }
       }
     });
   }
