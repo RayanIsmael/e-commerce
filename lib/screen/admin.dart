@@ -16,26 +16,6 @@ class _AdminState extends State<Admin> {
   var imageUlr;
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  FirebaseAuth auth = FirebaseAuth.instance;
-  startapp(context) async {
-    auth.authStateChanges().listen((user) {
-      if (user == null) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Login(),
-        ));
-      } else {
-        print("okkk");
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    startapp(context);
-    super.initState();
-  }
-
-/////*************************************/////
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size.height;
@@ -51,7 +31,10 @@ class _AdminState extends State<Admin> {
         actions: [
           IconButton(
               onPressed: () async {
-                await auth.signOut();
+                await FirebaseAuth.instance.signOut().whenComplete(() =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Login(),
+                    )));
               },
               icon: Icon(Icons.logout_rounded))
         ],

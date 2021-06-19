@@ -13,28 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   FirebaseAuth auth = FirebaseAuth.instance;
-  Future startapp() async {
-    auth.authStateChanges().listen((user) {
-      if (user == null) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Login(),
-        ));
-      } else {
-        if (auth.currentUser!.email == "rayan1998@gmail.com") {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => Admin(),
-            ));
-          }
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    startapp();
-    super.initState();
-  }
-
+  
 /////*************************************/////
   @override
   Widget build(BuildContext context) {
@@ -47,7 +26,14 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () async {
-                await auth.signOut();
+                await auth
+                    .signOut()
+                    .whenComplete(() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login(),))
+                    
+                    )
+                    .catchError((e) {
+                  print(e);
+                });
               },
               icon: Icon(Icons.logout_rounded))
         ],

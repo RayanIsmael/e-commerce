@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/screen/edite.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class EditeProducts extends StatefulWidget {
@@ -72,14 +74,54 @@ class _EditeProductsState extends State<EditeProducts> {
                               ),
                               trailing: Wrap(spacing: 0, children: <Widget>[
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => Edite(
+                                        mname: snapshot.data!.docs[index]
+                                            .data()['name'],
+                                        mprice: snapshot.data!.docs[index]
+                                            .data()['price'],
+                                        mdes: snapshot.data!.docs[index]
+                                            .data()["description"],
+                                        mcategory: snapshot.data!.docs[index]
+                                            .data()['category'],
+                                        url: snapshot.data!.docs[index]
+                                            .data()["image_url"],
+                                        docid: snapshot.data!.docs[index].id,
+                                      ),
+                                    ));
+                                  },
                                   icon: Icon(
                                     Icons.drive_file_rename_outline_outlined,
                                   ),
                                   color: Colors.amber[600],
                                 ),
                                 IconButton(
-                                    onPressed: () async {},
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("products")
+                                          .doc(snapshot.data!.docs[index].id)
+                                          .delete()
+                                          .whenComplete(() async{
+                                        await FirebaseStorage.instance
+                                            .refFromURL(snapshot
+                                                .data!.docs[index]
+                                                .data()["image_url"])
+                                            .delete()
+                                            .whenComplete(() {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text("Deleted")));
+                                        }).catchError((e){
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text("Error")));
+                                        }
+                                          
+                                        );
+                                      });
+                                    },
                                     icon: Icon(
                                       Icons.delete_rounded,
                                       color: Colors.red[300],

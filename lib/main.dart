@@ -1,3 +1,4 @@
+import 'package:e_commerce/conponent/auth.dart';
 import 'package:e_commerce/provider/firestor_products.dart';
 import 'package:e_commerce/provider/provider1.dart';
 import 'package:e_commerce/screen/home.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: CheckAuth(),
     );
   }
 }
