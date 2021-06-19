@@ -351,9 +351,11 @@ class _EditeState extends State<Edite> {
                           FirebaseStorage.instance.ref("images").child(iname);
                       await ref.putFile(file).whenComplete(() async {
                         await ref.getDownloadURL().then((value) {
-                          setState(() {
+                          if(mounted){
+                            setState(() {
                             imageUlr = value;
                           });
+                          }
                         });
                       });
                       providerpro.change(false);
@@ -391,9 +393,11 @@ class _EditeState extends State<Edite> {
                           FirebaseStorage.instance.ref("images").child(iname);
                       await ref.putFile(file).whenComplete(() async {
                         await ref.getDownloadURL().then((value) {
-                          setState(() {
+                          if(mounted){
+                            setState(() {
                             imageUlr = value;
                           });
+                          }
                         });
                       });
                       providerpro.change(false);

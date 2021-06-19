@@ -350,9 +350,11 @@ class _AddProductsState extends State<AddProducts> {
                           FirebaseStorage.instance.ref("images").child(iname);
                       await ref.putFile(file).whenComplete(() async {
                         await ref.getDownloadURL().then((value) {
-                          setState(() {
+                          if(mounted){
+                            setState(() {
                             imageUlr = value;
                           });
+                          }
                         });
                       });
                       providerpro.change(false);
@@ -390,9 +392,11 @@ class _AddProductsState extends State<AddProducts> {
                           FirebaseStorage.instance.ref("images").child(iname);
                       await ref.putFile(file).whenComplete(() async {
                         await ref.getDownloadURL().then((value) {
-                          setState(() {
+                          if(mounted){
+                            setState(() {
                             imageUlr = value;
                           });
+                          }
                         });
                       });
                       providerpro.change(false);

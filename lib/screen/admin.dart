@@ -3,7 +3,6 @@ import 'package:e_commerce/screen/editeproducts.dart';
 import 'package:e_commerce/screen/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class Admin extends StatefulWidget {
   Admin({Key? key}) : super(key: key);

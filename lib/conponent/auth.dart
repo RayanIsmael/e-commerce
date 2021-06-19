@@ -4,8 +4,6 @@ import 'package:e_commerce/screen/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CheckAuth extends StatefulWidget {
   const CheckAuth({Key? key}) : super(key: key);
 
@@ -15,8 +13,8 @@ class CheckAuth extends StatefulWidget {
 
 class _CheckAuthState extends State<CheckAuth> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  Future startapp() async {
-    auth.authStateChanges().listen(( User? user) {
+  startapp() async {
+    auth.authStateChanges().listen((User? user) {
       if (user == null) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => Login(),
@@ -26,10 +24,9 @@ class _CheckAuthState extends State<CheckAuth> {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => Admin(),
           ));
-        }else{
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => Home()
-          ));
+        } else {
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
         }
       }
     });
@@ -37,13 +34,13 @@ class _CheckAuthState extends State<CheckAuth> {
 
   @override
   void initState() {
+    if(mounted){
     startapp();
+
+    }
     super.initState();
   }
-
 /////*************************************/////
-
-
 
   @override
   Widget build(BuildContext context) {

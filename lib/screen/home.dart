@@ -1,16 +1,11 @@
-import 'package:e_commerce/screen/admin.dart';
 import 'package:e_commerce/screen/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
 
-  @override
-  _HomeState createState() => _HomeState();
-}
 
-class _HomeState extends State<Home> {
+// ignore: must_be_immutable
+class Home extends StatelessWidget{
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   FirebaseAuth auth = FirebaseAuth.instance;
   

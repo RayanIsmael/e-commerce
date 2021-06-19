@@ -1,7 +1,6 @@
 import 'package:e_commerce/conponent/auth.dart';
 import 'package:e_commerce/provider/firestor_products.dart';
 import 'package:e_commerce/provider/provider1.dart';
-import 'package:e_commerce/screen/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

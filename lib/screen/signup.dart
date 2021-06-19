@@ -14,6 +14,7 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
+    // ignore: unused_local_variable
     var name, email, password;
     double height = MediaQuery.of(context).size.height;
     ////// Validator

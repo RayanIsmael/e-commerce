@@ -53,7 +53,7 @@ class _EditeProductsState extends State<EditeProducts> {
                                 snapshot.data!.docs[index].data()["image_url"],
                                 height: 80,
                                 width: 40,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.fitWidth,
                               )),
                           ////////////////////
                           Expanded(
